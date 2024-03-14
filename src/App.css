@@ -1,18 +1,20 @@
-#root {
+.app {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-  display: grid;
-  grid-template-rows: 0.5fr 1fr 1fr;
-  grid-gap: 1rem;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-items: center;
+  justify-content: center;
 }
 
 
 body{
   background: #333;
   padding: 30px;
+    min-width: 320px;
+    min-height: 100vh;
 }
 
 @keyframes spin{
@@ -130,6 +132,28 @@ body{
       bottom: 100%;
     }
   }
+}
+
+.controls, .control-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hours {
+  display: flex;
+  flex-direction: row;
+  color: cornflowerblue;
+  width: 21rem;
+  justify-content: space-around;
+}
+
+.speeds {
+  display: flex;
+  flex-direction: row;
+  color: cornflowerblue;
+  width: 18rem;
+  justify-content: space-around;
 }
 
 /*.logo {*/

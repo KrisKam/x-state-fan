@@ -1,11 +1,17 @@
 import './App.css';
+import {createActor} from "xstate";
 import {machine} from './fanMachine.tsx';
 
 function App() {
+  const fanActor = createActor(machine);
+  fanActor.subscribe((snapshot) => {
+    console.log(snapshot);
+  });
 
+  fanActor.start();
 
   return (
-    <>
+    <div className={'app'}>
       <h1>Rotating Fan</h1>
 
       <section className={"ceiling-container low"}>
@@ -15,53 +21,40 @@ function App() {
         <div className={"ceiling-fan vertical bottom"}></div>
       </section>
 
-      <div>
-        <fieldset>
-          <legend>Set Timer</legend>
+      <div className={'controls'}>
+        <section className={'control-section'}>
+          <p>Set Timer</p>
+          <div className={'hours'}>
+            <p className={'hour'}>1 Hour</p>
+            <p className={'hour'}>2 Hours</p>
+            <p className={'hour'}>4 Hours</p>
+            <p className={'hour'}>8 Hours</p>
+          </div>
           <button
-            type={'button'}
-            onClick={() => {
-            }}
-            className={'timer-button'}
+              type={'button'}
+              onClick={() => {
+              }}
+              className={'timer-button'}
           >
-            1 Hour
+            +/- Timer
           </button>
-          <button
-            type={'button'}
-            onClick={() => {
-            }}
-            className={'timer-button'}
-          >
-            2 Hours
-          </button>
-          <button
-            type={'button'}
-            onClick={() => {
-            }}
-            className={'timer-button'}
-          >
-            4 Hours
-          </button>
-          <button
-            type={'button'}
-            onClick={() => {
-            }}
-            className={'timer-button'}
-          >
-            8 Hours
-          </button>
-        </fieldset>
+        </section>
 
-        <section>
-          <div>
-            <p className={''}>LOW</p>
-            <p className={''}>MEDIUM</p>
-            <p className={''}>HIGH</p>
+        <section className={'control-section'}>
+          <p>Set Speed</p>
+          <div className={'speeds'}>
+            <p className={'speed'}>LOW</p>
+            <p className={'speed'}>MEDIUM</p>
+            <p className={'speed'}>HIGH</p>
           </div>
           <button type={'button'} onClick={() => {}} className={'speed'}>+/- Speed</button>
         </section>
+        <div>
+          <button type={'button'} className={''} onClick={() => fanActor.send({ type: 'turn_on' })}>on</button>
+          <button type={'button'} className={''} onClick={() => fanActor.send({type: 'turn_off'})}>off</button>
+        </div>
       </div>
-    </>
+    </div>
   )
 }
 
