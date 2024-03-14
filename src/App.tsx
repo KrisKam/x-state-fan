@@ -1,35 +1,69 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './App.css';
+import {machine} from './fanMachine.tsx';
 
 function App() {
-  const [count, setCount] = useState(0)
+
 
   return (
     <>
+      <h1>Rotating Fan</h1>
+
+      <section className={"ceiling-container low"}>
+        <div className={"ceiling-fan horizontal left"}></div>
+        <div className={"ceiling-fan horizontal right"}></div>
+        <div className={"ceiling-fan vertical top"}></div>
+        <div className={"ceiling-fan vertical bottom"}></div>
+      </section>
+
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <fieldset>
+          <legend>Set Timer</legend>
+          <button
+            type={'button'}
+            onClick={() => {
+            }}
+            className={'timer-button'}
+          >
+            1 Hour
+          </button>
+          <button
+            type={'button'}
+            onClick={() => {
+            }}
+            className={'timer-button'}
+          >
+            2 Hours
+          </button>
+          <button
+            type={'button'}
+            onClick={() => {
+            }}
+            className={'timer-button'}
+          >
+            4 Hours
+          </button>
+          <button
+            type={'button'}
+            onClick={() => {
+            }}
+            className={'timer-button'}
+          >
+            8 Hours
+          </button>
+        </fieldset>
+
+        <section>
+          <div>
+            <p className={''}>LOW</p>
+            <p className={''}>MEDIUM</p>
+            <p className={''}>HIGH</p>
+          </div>
+          <button type={'button'} onClick={() => {}} className={'speed'}>+/- Speed</button>
+        </section>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
 
 export default App
+
