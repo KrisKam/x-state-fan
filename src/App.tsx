@@ -12,6 +12,8 @@ function App() {
 
   return (
     <div className={'app'}>
+      <div></div>
+
       <h1>Rotating Fan</h1>
 
       <section className={"ceiling-container low"}>

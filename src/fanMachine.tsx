@@ -4,81 +4,17 @@ export const machine = setup({
   types: {
     context: {} as { speed: number; timer: number; fan_on: boolean },
     events: {} as
-      | { type: "turn_on" }
-      | { type: "turn_on_timer" }
-      | { type: "increase_time" }
-      | { type: "decrease_time" }
-      | { type: "turn_off_timer" }
-      | { type: "turn_off" }
-      | { type: "increase_speed" }
-      | { type: "decrease_speed" },
+        | { type: "turn_on" }
+        | { type: "turn_on_timer" }
+        | { type: "turn_off_timer" }
+        | { type: "increase_time" }
+        | { type: "decrease_time" }
+        | { type: "turn_off" }
+        | { type: "increase_speed" }
+        | { type: "decrease_speed" },
   },
   actions: {
-    updateTime: function ({ context, event }, params) {
-      // Add your action code here
-      // ...
-    },
-    reset: function ({ context, event }, params) {
-      // Add your action code here
-      // ...
-    },
-  },
-  schemas: {
-    events: {
-      turn_on: {
-        type: "object",
-        properties: {},
-      },
-      turn_on_timer: {
-        type: "object",
-        properties: {},
-      },
-      increase_time: {
-        type: "object",
-        properties: {},
-      },
-      decrease_time: {
-        type: "object",
-        properties: {},
-      },
-      turn_off_timer: {
-        type: "object",
-        properties: {},
-      },
-      turn_off: {
-        type: "object",
-        properties: {},
-      },
-      "": {
-        type: "object",
-        properties: {},
-      },
-      increase_speed: {
-        type: "object",
-        properties: {},
-      },
-      decrease_speed: {
-        type: "object",
-        properties: {},
-      },
-    },
-    context: {
-      speed: {
-        type: "number",
-        description:
-          'Generated automatically based on the key: "speed" in initial context values',
-      },
-      timer: {
-        type: "number",
-        description:
-          'Generated automatically based on the key: "timer" in initial context values',
-      },
-      fan_on: {
-        type: "boolean",
-        description:
-          'Generated automatically based on the key: "fan_on" in initial context values',
-      },
-    },
+    reset: assign({speed: 1, timer: 1}),
   },
 }).createMachine({
   context: {
@@ -135,12 +71,7 @@ export const machine = setup({
                   on: {
                     increase_time: {
                       target: "TWO_HOURS",
-                      actions: {
-                        type: "updateTime",
-                        params: {
-                          newTime: 2,
-                        },
-                      },
+                      actions: assign({timer: 2}),
                     },
                   },
                 },
@@ -148,21 +79,11 @@ export const machine = setup({
                   on: {
                     increase_time: {
                       target: "FOUR_HOURS",
-                      actions: {
-                        type: "updateTime",
-                        params: {
-                          newTime: 4,
-                        },
-                      },
+                      actions: assign({timer: 4}),
                     },
                     decrease_time: {
                       target: "ONE_HOUR",
-                      actions: {
-                        type: "updateTime",
-                        params: {
-                          newTime: 1,
-                        },
-                      },
+                      actions: assign({timer: 1}),
                     },
                   },
                 },
@@ -170,21 +91,11 @@ export const machine = setup({
                   on: {
                     increase_time: {
                       target: "EIGHT_HOURS",
-                      actions: {
-                        type: "updateTime",
-                        params: {
-                          newTime: 8,
-                        },
-                      },
+                      actions: assign({timer: 8}),
                     },
                     decrease_time: {
                       target: "TWO_HOURS",
-                      actions: {
-                        type: "updateTime",
-                        params: {
-                          newTime: 2,
-                        },
-                      },
+                      actions: assign({timer: 2}),
                     },
                   },
                 },
@@ -192,12 +103,7 @@ export const machine = setup({
                   on: {
                     decrease_time: {
                       target: "FOUR_HOURS",
-                      actions: {
-                        type: "updateTime",
-                        params: {
-                          newTime: 4,
-                        },
-                      },
+                      actions: assign({timer: 4}),
                     },
                   },
                 },
@@ -212,6 +118,7 @@ export const machine = setup({
               on: {
                 increase_speed: {
                   target: "MEDIUM",
+                  actions: assign({speed: 2})
                 },
               },
             },
@@ -219,9 +126,11 @@ export const machine = setup({
               on: {
                 increase_speed: {
                   target: "HIGH",
+                  actions: assign({speed: 3})
                 },
                 decrease_speed: {
                   target: "LOW",
+                  actions: assign({speed: 1})
                 },
               },
             },
@@ -229,6 +138,7 @@ export const machine = setup({
               on: {
                 decrease_speed: {
                   target: "MEDIUM",
+                  actions: assign({speed: 2})
                 },
               },
             },
