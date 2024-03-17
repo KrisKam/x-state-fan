@@ -70,6 +70,7 @@ export const machine = setup({
               },
               states: {
                 ONE_HOUR: {
+                  tags: 'oneHour',
                   on: {
                     increase_time: {
                       target: "TWO_HOURS",
@@ -78,6 +79,7 @@ export const machine = setup({
                   },
                 },
                 TWO_HOURS: {
+                  tags: 'twoHours',
                   on: {
                     increase_time: {
                       target: "FOUR_HOURS",
@@ -90,6 +92,7 @@ export const machine = setup({
                   },
                 },
                 FOUR_HOURS: {
+                  tags: 'fourHours',
                   on: {
                     increase_time: {
                       target: "EIGHT_HOURS",
@@ -102,6 +105,7 @@ export const machine = setup({
                   },
                 },
                 EIGHT_HOURS: {
+                  tags: 'eightHours',
                   on: {
                     decrease_time: {
                       target: "FOUR_HOURS",
@@ -117,6 +121,7 @@ export const machine = setup({
           initial: "LOW",
           states: {
             LOW: {
+              tags: 'low',
               on: {
                 increase_speed: {
                   target: "MEDIUM",
@@ -125,6 +130,7 @@ export const machine = setup({
               },
             },
             MEDIUM: {
+              tags: 'medium',
               on: {
                 increase_speed: {
                   target: "HIGH",
@@ -137,6 +143,7 @@ export const machine = setup({
               },
             },
             HIGH: {
+              tags: 'high',
               on: {
                 decrease_speed: {
                   target: "MEDIUM",
