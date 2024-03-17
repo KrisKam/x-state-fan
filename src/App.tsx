@@ -16,16 +16,15 @@ function App() {
 
       <h1>Rotating Fan</h1>
 
-      <section className={"ceiling-container low"}>
-        <div className={"ceiling-fan horizontal left"}></div>
-        <div className={"ceiling-fan horizontal right"}></div>
-        <div className={"ceiling-fan vertical top"}></div>
-        <div className={"ceiling-fan vertical bottom"}></div>
+      <section className={"container low"}>
+        <div className={"fan horizontal left"}></div>
+        <div className={"fan horizontal right"}></div>
+        <div className={"fan vertical top"}></div>
+        <div className={"fan vertical bottom"}></div>
       </section>
 
       <div className={'controls'}>
         <section className={'control-section'}>
-          <p>Set Timer</p>
           <div className={'hours'}>
             <p className={'hour'}>1 Hour</p>
             <p className={'hour'}>2 Hours</p>
@@ -43,7 +42,6 @@ function App() {
         </section>
 
         <section className={'control-section'}>
-          <p>Set Speed</p>
           <div className={'speeds'}>
             <p className={'speed'}>LOW</p>
             <p className={'speed'}>MEDIUM</p>
@@ -52,8 +50,10 @@ function App() {
           <button type={'button'} onClick={() => {}} className={'speed'}>+/- Speed</button>
         </section>
         <div>
-          <button type={'button'} className={''} onClick={() => fanActor.send({ type: 'turn_on' })}>on</button>
-          <button type={'button'} className={''} onClick={() => fanActor.send({type: 'turn_off'})}>off</button>
+          {fanActor.getSnapshot().hasTag('off')
+           ? <button type={'button'} className={'on-off-button'} onClick={() => fanActor.send({ type: 'turn_on' })}>ON</button>
+          : <button type={'button'} className={'on-off-button'} onClick={() => fanActor.send({type: 'turn_off'})}>OFF</button>
+          }
         </div>
       </div>
     </div>

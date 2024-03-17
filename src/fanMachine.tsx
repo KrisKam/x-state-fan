@@ -26,6 +26,7 @@ export const machine = setup({
   initial: "FAN_OFF",
   states: {
     FAN_OFF: {
+      tags: 'off',
       on: {
         turn_on: {
           target: "FAN_ON",
@@ -33,6 +34,7 @@ export const machine = setup({
       },
     },
     FAN_ON: {
+      tags: 'on',
       type: "parallel",
       on: {
         turn_off: {

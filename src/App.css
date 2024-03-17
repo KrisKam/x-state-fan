@@ -25,12 +25,14 @@ body{
     transform: rotate(360deg);
   }
 }
-.ceiling-container{
+.container{
   width: 300px;
   height: 300px;
   border-radius: 50%;
   position: relative;
   display: inline-block;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
   &:after{
     content:"";
     position: absolute;
@@ -60,7 +62,7 @@ body{
 }
 
 
-.ceiling-fan{
+.fan{
   display: block;
   background: #ccc;
   border-radius: 5px;
@@ -140,6 +142,10 @@ body{
   align-items: center;
 }
 
+.control-section {
+  margin-bottom: 2rem;
+}
+
 .hours {
   display: flex;
   flex-direction: row;
@@ -154,6 +160,12 @@ body{
   color: cornflowerblue;
   width: 18rem;
   justify-content: space-around;
+}
+
+.on-off-button {
+  margin-top: 2rem;
+  padding: 0.7em;
+  border-radius: 22px;
 }
 
 /*.logo {*/
