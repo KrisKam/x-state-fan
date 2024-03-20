@@ -1,22 +1,29 @@
 import './App.css';
-import {createActor} from "xstate";
 import {machine} from './fanMachine.tsx';
+import {useActor} from "@xstate/react";
 
 function App() {
-  const fanActor = createActor(machine);
-  fanActor.subscribe((snapshot) => {
-    console.log(snapshot);
-  });
+  const [state, send] = useActor(machine);
 
-  fanActor.start();
-
-  const fanState = fanActor.getSnapshot();
+  function getFanSpeedClasses() {
+    let classes = 'container';
+    if (state.hasTag('low')) {
+      classes += ' low';
+    }
+    if (state.hasTag('medium')) {
+      classes += ' medium';
+    }
+    if (state.hasTag('high')) {
+      classes += ' high';
+    }
+    return classes;
+  }
 
   return (
     <div className={'app'}>
       <h1>Rotating Fan</h1>
 
-      <section className={"container low"}>
+      <section className={getFanSpeedClasses()}>
         <div className={"fan horizontal left"}></div>
         <div className={"fan horizontal right"}></div>
         <div className={"fan vertical top"}></div>
@@ -26,33 +33,41 @@ function App() {
       <div className={'controls'}>
         <section className={'control-section'}>
           <div className={'hours'}>
-            <p className={`hour ${fanState.hasTag('oneHour') ? 'active' : ''}`}>1 Hour</p>
-            <p className={`hour ${fanState.hasTag('twoHours') ? 'active' : ''}`}>2 Hours</p>
-            <p className={`hour ${fanState.hasTag('fourHours') ? 'active' : ''}`}>4 Hours</p>
-            <p className={`hour ${fanState.hasTag('eightHours') ? 'active' : ''}`}>8 Hours</p>
+            <p className={`hour ${state.hasTag('timeOff') ? 'active' : ''}`}>Timer Off</p>
+            <p className={`hour ${state.hasTag('oneHour') ? 'active' : ''}`}>1 Hour</p>
+            <p className={`hour ${state.hasTag('twoHours') ? 'active' : ''}`}>2 Hours</p>
+            <p className={`hour ${state.hasTag('fourHours') ? 'active' : ''}`}>4 Hours</p>
+            <p className={`hour ${state.hasTag('eightHours') ? 'active' : ''}`}>8 Hours</p>
           </div>
           <button
               type={'button'}
-              onClick={() => {}}
-              className={'timer-button'}
+              onClick={() => send({type: 'change_timer'})}
+              className={''}
           >
-            +/- Timer
+            +/- Time
           </button>
+
         </section>
 
         <section className={'control-section'}>
           <div className={'speeds'}>
-            <p className={`speed ${fanState.hasTag('low') ? 'active' : ''}`}>LOW</p>
-            <p className={`speed ${fanState.hasTag('medium') ? 'active' : ''}`}>MEDIUM</p>
-            <p className={`speed ${fanState.hasTag('high') ? 'active' : ''}`}>HIGH</p>
+          <p className={`speed ${state.hasTag('low') ? 'active' : ''}`}>LOW</p>
+            <p className={`speed ${state.hasTag('medium') ? 'active' : ''}`}>MEDIUM</p>
+            <p className={`speed ${state.hasTag('high') ? 'active' : ''}`}>HIGH</p>
           </div>
-          <button type={'button'} onClick={() => {}} className={'speed'}>+/- Speed</button>
+          <button
+              type={'button'}
+              onClick={() => send({type: 'change_speed'})}
+              className={'speed'}
+          >
+            +/- Speed
+          </button>
         </section>
 
         <div>
-          {fanState.hasTag('off')
-           ? <button type={'button'} className={'on-off-button'} onClick={() => fanActor.send({ type: 'turn_on' })}>ON</button>
-          : <button type={'button'} className={'on-off-button'} onClick={() => fanActor.send({type: 'turn_off'})}>OFF</button>
+          {state.hasTag('off')
+           ? <button type={'button'} className={'on-off-button'} onClick={() => send({type: 'turn_on'})}>ON</button>
+          : <button type={'button'} className={'on-off-button'} onClick={() => send({type: 'turn_off'})}>OFF</button>
           }
         </div>
         </div>
